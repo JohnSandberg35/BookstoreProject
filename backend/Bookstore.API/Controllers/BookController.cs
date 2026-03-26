@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Bookstore.API.Data;
+using System.Linq;
 
 namespace Bookstore.API.Controllers
 {
@@ -14,34 +15,53 @@ namespace Bookstore.API.Controllers
 
         [HttpGet("AllBooks")]
         public IActionResult GetBooks(
-            int pageSize = 5,       // Default to 5 books per page (assignment requirement)
-            int pageNum = 1,        // Default to first page
-            string sortOrder = "asc" // Default sort direction for title
-        )
+           int pageSize = 5,
+           int pageNum = 1,
+           string sortOrder = "asc",
+           [FromQuery] List<string>? categories = null
+       )
         {
-            // Start with the full books query
+            // Start with IQueryable (important for filtering before execution)
             var query = _bookContext.Books.AsQueryable();
 
-            // Apply sorting by title based on sortOrder parameter
+            // ✅ Apply category filtering FIRST
+            if (categories != null && categories.Any())
+            {
+                query = query.Where(b => categories.Contains(b.Category));
+            }
+
+            // ✅ Apply sorting
             query = sortOrder == "desc"
                 ? query.OrderByDescending(b => b.Title)
                 : query.OrderBy(b => b.Title);
 
-            // Get total count BEFORE applying pagination
+            // ✅ Count AFTER filtering (critical for pagination)
             var totalNumBooks = query.Count();
 
-            // Apply pagination using LINQ Skip/Take
+            // ✅ Apply pagination LAST
             var books = query
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            // Return both the books list and total count so React can build pagination
+            // Return results
             return Ok(new
             {
                 Books = books,
                 TotalNumBooks = totalNumBooks
             });
+        }
+
+        // ✅ NEW ENDPOINT — GET DISTINCT CATEGORIES
+        [HttpGet("GetCategories")]
+        public IActionResult GetCategories()
+        {
+            var categories = _bookContext.Books
+                .Select(b => b.Category)
+                .Distinct()
+                .ToList();
+
+            return Ok(categories);
         }
     }
 }
