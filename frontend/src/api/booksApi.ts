@@ -7,7 +7,8 @@
 import type { Book } from "../types/Book";
 
 // Base URL — update this to your Azure backend URL when deploying
-const API_URL = "https://localhost:5000/Book";
+const API_URL =
+  "https://bookstore-sandberg-backend-gsbkhtf4b6gwatby.francecentral-01.azurewebsites.net/Book";
 
 // Shape of the paginated response from GET /Book/AllBooks
 export interface FetchBooksResponse {
