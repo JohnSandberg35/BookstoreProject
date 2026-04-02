@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/b081b210-587e-40ed-a229-056ea6102f36/resourceGroups/appsvc_windows_francecentral/providers/Microsoft.Web/sites/Bookstore-Sandberg-Backend",
+  "appService.deploySubpath": "backend\\Bookstore.API\\publish"
+}
