@@ -22,7 +22,7 @@ function CategoryFilter({
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://bookstore-sandberg-backend-gsbkhtf4b6gwatby.francecentral-01.azurewebsites.net/Book/AllBooks",
+          "https://bookstore-sandberg-backend-gsbkhtf4b6gwatby.francecentral-01.azurewebsites.net/Book/GetCategories",
         );
         const data = await response.json();
         setCategories(data);
