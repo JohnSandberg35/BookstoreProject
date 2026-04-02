@@ -64,3 +64,10 @@ C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\obj\Release
 C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\obj\Release\net10.0\Bookstore.API.pdb
 C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\obj\Release\net10.0\Bookstore.API.genruntimeconfig.cache
 C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\obj\Release\net10.0\ref\Bookstore.API.dll
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\publish\web.config
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\publish\appsettings.Development.json
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\publish\appsettings.json
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\publish\Bookstore.API.deps.json
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\publish\Bookstore.API.runtimeconfig.json
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\publish\Bookstore.API.staticwebassets.endpoints.json
+C:\Users\JohnSandberg\Desktop\BookstoreProject\backend\Bookstore.API\bin\Release\net10.0\Bookstore.sqlite
