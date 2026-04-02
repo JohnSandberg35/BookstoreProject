@@ -35,9 +35,12 @@ if (app.Environment.IsDevelopment())
 //   .WithOrigins("http://localhost:3000", "https://your-app.azurestaticapps.net")
 // ─────────────────────────────────────────────────────────────────────────────
 app.UseCors(x => x
-    .WithOrigins("http://localhost:3000", "https://wonderful-rock-0ea2f941e.2.azurestaticapps.net")  // Local dev frontend URL
-    .AllowAnyMethod()                      // Allows GET, POST, PUT, DELETE, etc.
-    .AllowAnyHeader()                      // Allows Content-Type and other headers
+    .WithOrigins(
+        "http://localhost:3000",
+        "https://wonderful-rock-0ea2f941e.2.azurestaticapps.net"
+    )
+    .AllowAnyMethod()
+    .AllowAnyHeader()
 );
 
 app.UseHttpsRedirection();
