@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Bookstore.API.Data;
 
 namespace Bookstore.API.Controllers
@@ -19,11 +19,18 @@ namespace Bookstore.API.Controllers
         public IActionResult GetBooks(
             int pageSize = 5,        // Default to 5 books per page
             int pageNum = 1,         // Default to first page
-            string sortOrder = "asc" // Default sort direction for title
+            string sortOrder = "asc", // Default sort direction for title
+            [FromQuery] List<string>? categories = null
         )
         {
             // Start with the full books query
             var query = _bookContext.Books.AsQueryable();
+
+            // If categories are provided, only include matching books
+            if (categories != null && categories.Any())
+            {
+                query = query.Where(b => categories.Contains(b.Category));
+            }
 
             // Apply sorting by title based on sortOrder parameter
             query = sortOrder == "desc"
@@ -45,6 +52,23 @@ namespace Bookstore.API.Controllers
                 Books = books,
                 TotalNumBooks = totalNumBooks
             });
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // GET  /Book/GetCategories
+        // Returns a distinct, alphabetized list of all book categories
+        // ─────────────────────────────────────────────────────────────
+        [HttpGet("GetCategories")]
+        public IActionResult GetCategories()
+        {
+            var categories = _bookContext.Books
+                .Select(b => b.Category)
+                .Where(c => !string.IsNullOrWhiteSpace(c))
+                .Distinct()
+                .OrderBy(c => c)
+                .ToList();
+
+            return Ok(categories);
         }
 
         // ─────────────────────────────────────────────────────────────

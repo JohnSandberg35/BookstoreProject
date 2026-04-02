@@ -5,6 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useState } from "react";
+import { fetchCategories } from "../api/booksApi";
 
 interface CategoryFilterProps {
   selectedCategories: string[];
@@ -19,19 +20,16 @@ function CategoryFilter({
 
   // Fetch the distinct category list from the backend on mount
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
       try {
-        const response = await fetch(
-          "https://bookstore-sandberg-backend-gsbkhtf4b6gwatby.francecentral-01.azurewebsites.net/Book/GetCategories",
-        );
-        const data = await response.json();
+        const data = await fetchCategories();
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
 
-    fetchCategories();
+    loadCategories();
   }, []);
 
   // Toggle a category in or out of the selected list

@@ -6,15 +6,27 @@
 
 import type { Book } from "../types/Book";
 
-// Base URL — update this to your Azure backend URL when deploying
-const API_URL =
-  "https://bookstore-sandberg-backend-gsbkhtf4b6gwatby.francecentral-01.azurewebsites.net/Book";
+// Base URL — configure with VITE_API_BASE_URL in each environment
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ??
+  "https://bookstore-sandberg-backend-gsbkhtf4b6gwatby.francecentral-01.azurewebsites.net";
+const API_URL = `${API_BASE_URL}/Book`;
 
 // Shape of the paginated response from GET /Book/AllBooks
 export interface FetchBooksResponse {
   books: Book[];
   totalNumBooks: number;
 }
+
+export const fetchCategories = async (): Promise<string[]> => {
+  const response = await fetch(`${API_URL}/GetCategories`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch categories from the server.");
+  }
+
+  return await response.json();
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // fetchBooks
