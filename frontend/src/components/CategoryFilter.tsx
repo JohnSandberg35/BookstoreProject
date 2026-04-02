@@ -1,3 +1,9 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// CategoryFilter.tsx
+// Fetches all distinct categories from the backend and renders them as
+// checkboxes. Checked categories are passed up to BooksPage via props.
+// ─────────────────────────────────────────────────────────────────────────────
+
 import { useEffect, useState } from "react";
 
 interface CategoryFilterProps {
@@ -11,7 +17,7 @@ function CategoryFilter({
 }: CategoryFilterProps) {
   const [categories, setCategories] = useState<string[]>([]);
 
-  // Fetch categories from backend
+  // Fetch the distinct category list from the backend on mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -28,7 +34,7 @@ function CategoryFilter({
     fetchCategories();
   }, []);
 
-  // Handle checkbox toggle
+  // Toggle a category in or out of the selected list
   const handleChange = (category: string) => {
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== category));
@@ -40,7 +46,6 @@ function CategoryFilter({
   return (
     <div>
       <h5 className="mb-3">Filter by Category</h5>
-
       {categories.map((c) => (
         <div key={c} className="form-check">
           <input

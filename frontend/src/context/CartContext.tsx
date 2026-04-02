@@ -1,7 +1,13 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// CartContext.tsx
+// Provides global cart state to the entire app via React Context.
+// Any component can call useCart() to read or modify the cart.
+// ─────────────────────────────────────────────────────────────────────────────
+
 import { createContext, useContext, useState } from "react";
 import type { CartItem } from "../types/CartItem";
 
-// Define what the context will provide
+// Define what the context will expose to consumers
 interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
@@ -9,19 +15,17 @@ interface CartContextType {
   clearCart: () => void;
 }
 
-// Create context
+// Create the context (undefined until the Provider mounts)
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Provider component
+// Provider component — wrap App in this so all children can access the cart
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  // Add item to cart
+  // Add an item to the cart — if it already exists, increase its quantity
   const addToCart = (item: CartItem) => {
     const existing = cart.find((c) => c.bookId === item.bookId);
-
     if (existing) {
-      // Update quantity
       setCart(
         cart.map((c) =>
           c.bookId === item.bookId
@@ -34,12 +38,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Remove item
+  // Remove a single item from the cart by its bookId
   const removeFromCart = (bookId: number) => {
     setCart(cart.filter((c) => c.bookId !== bookId));
   };
 
-  // Clear cart
+  // Clear the entire cart (e.g. after checkout)
   const clearCart = () => {
     setCart([]);
   };
@@ -53,7 +57,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Custom hook
+// Custom hook — throws a helpful error if used outside of CartProvider
 export function useCart() {
   const context = useContext(CartContext);
   if (!context) {

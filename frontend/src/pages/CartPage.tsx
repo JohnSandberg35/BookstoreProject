@@ -1,3 +1,9 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// CartPage.tsx
+// Displays all items currently in the cart with individual remove buttons,
+// a running total, and a Continue Shopping button.
+// ─────────────────────────────────────────────────────────────────────────────
+
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
@@ -5,16 +11,14 @@ function CartPage() {
   const { cart, removeFromCart } = useCart();
   const navigate = useNavigate();
 
-  // Calculate total price
-  const total = cart.reduce((sum, item) => {
-    return sum + item.price * item.quantity;
-  }, 0);
+  // Calculate the total price across all cart items
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="container mt-4">
       <h1 className="mb-4">🛒 Your Cart</h1>
 
-      {/* If cart is empty */}
+      {/* Empty state */}
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -31,6 +35,7 @@ function CartPage() {
                   </p>
                 </div>
 
+                {/* Remove individual item from cart */}
                 <button
                   className="btn btn-danger"
                   onClick={() => removeFromCart(item.bookId)}
@@ -41,12 +46,12 @@ function CartPage() {
             </div>
           ))}
 
-          {/* Total */}
+          {/* Order total */}
           <h3 className="mt-4">Total: ${total.toFixed(2)}</h3>
         </>
       )}
 
-      {/* Continue Shopping */}
+      {/* Go back to browsing */}
       <button className="btn btn-secondary mt-4" onClick={() => navigate(-1)}>
         Continue Shopping
       </button>
